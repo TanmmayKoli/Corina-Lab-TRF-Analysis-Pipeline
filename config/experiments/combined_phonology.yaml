@@ -1,0 +1,43 @@
+# Experiment: combined_phonology
+# --------------------------------
+# Full combined model: motion_state_v3 regressors + phonological regressors.
+#
+# Scientific question:
+#   Do phonologically-grounded kinematic events (stroke peaks, transition
+#   minima, signing rate) explain additional variance in EEG *on top of*
+#   the raw kinematic model? If r improves over motion_state_v3, the brain
+#   is tracking sign structure beyond general movement.
+#
+# Regressors (10 total):
+#   From motion_state_v3 (kinematic baseline):
+#     motion_energy, velocity_stasis, velocity_stasis_onset_10,
+#     velocity_stasis_offset_10, left_hand_stop_onset,
+#     right_hand_stop_onset, global_motion_peak
+#   Added (phonological):
+#     sign_stroke_peak, sign_transition_min, sign_rate
+#
+# Requires: register_elan_regressors(elan) called before running.
+
+name: combined_phonology
+
+regressors:
+  - motion_energy
+  - velocity_stasis
+  - velocity_stasis_onset_10
+  - velocity_stasis_offset_10
+  - left_hand_stop_onset
+  - right_hand_stop_onset
+  - global_motion_peak
+  - sign_stroke_peak
+  - sign_transition_min
+  - sign_rate
+
+trf:
+  tmin: 0.0
+  tmax:  0.6
+  backend: ridge
+  alpha: 10000000.0
+
+evaluation:
+  scheme: blocked
+  folds: leave_one_presentation_out

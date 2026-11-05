@@ -1,0 +1,33 @@
+# Session config — E. Haggerty, BioSemi 512 Hz, 5× ASL Story (same stimulus as MC).
+# Differences from session.yaml (MC):
+#   - end_code: 253 (not 254)
+#   - drop_channels: adds EXG4–EXG8 (empty channels in this file)
+#   - eeg_path: E. Haggerty's ICA-cleaned file
+
+participant: EH
+srate: 512
+common_rate: 64
+
+# Video presentation markers
+onset_code: 255        # fires 5×
+end_code: 253          # fires 5× (253 used instead of 254 for this participant)
+n_presentations: 5
+presentation_duration_s: 173.1
+
+# Sync pulse
+pulse_code: 50
+pulse_interval_ms: 1000
+
+# Channel handling
+# 40 total channels; drop non-scalp + empty EXG channels → 29 clean scalp channels
+drop_channels: [LMastoid, RMastoid, Eye, Oz, FC5, O2, EXG4, EXG5, EXG6, EXG7, EXG8]
+
+# EEG format
+eeg_format: eeglab
+
+# Data file paths (relative to project root)
+eeg_path: sign_language_trf/data/eeg/E.Haggerty.8.25.26_filt_chop_elist_bins_ica_rmic_copy.set
+motion_path: sign_language_trf/data/rokoko/Tristan_Story_1_hands_only.csv
+markers_path: sign_language_trf/data/markers/Tristan_Story_1_processed_biosemi_markers.csv
+
+motion_onset_offset_ms: 0.0

@@ -1,0 +1,20 @@
+# ── EEG data (participant data — never commit) ────────────────────────────
+sign_language_trf/data/eeg/
+
+# ── Large stimulus / motion files ────────────────────────────────────────
+sign_language_trf/data/video/
+sign_language_trf/data/rokoko/Tristan_Story_1_raw.csv
+sign_language_trf/data/rokoko/Tristan_Story_1_processed*.csv
+
+# ── Generated result files (large, reproducible) ─────────────────────────
+results/*.npz
+
+# ── Python cache ─────────────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# ── OS files ─────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db

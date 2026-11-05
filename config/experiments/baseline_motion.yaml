@@ -1,0 +1,17 @@
+# Experiment: baseline_motion
+# Scientific question: Do left and right hand speeds independently predict EEG?
+# This is the cleanest minimal model — two continuous regressors, low collinearity.
+# left_hand_speed × right_hand_speed: r ≈ 0.37 (acceptable)
+
+name: baseline_motion
+regressors: [left_hand_speed, right_hand_speed]
+
+trf:
+  tmin: 0.0       # 100ms before stimulus (pre-stimulus baseline)
+  tmax:  0.5       # 500ms after stimulus  (covers P1, N1, P2, N200, P300 range)
+  backend: ridge
+  alpha: 1.0       # ridge regularization λ; tune via nested CV once real EEG available
+
+evaluation:
+  scheme: blocked
+  folds: leave_one_presentation_out   # 5 folds, one per video presentation

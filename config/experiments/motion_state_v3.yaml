@@ -1,0 +1,38 @@
+# Experiment 4 v3: Best kinematic posture model (F7 r=0.1078, 8 sig channels)
+# ------------------------------------------------------------------------
+# This is the current best model. Validated via permutation test (42 perms,
+# 8 channels significant at p<0.05, minimum p=0.023).
+#
+# Design rationale:
+#   - motion_energy          : broadband motion baseline (continuous)
+#   - velocity_stasis        : bilateral stillness state (0.05 m/s, 6 periods)
+#   - velocity_stasis_onset_10  : relaxed stasis onset events (0.10 m/s, 21 events)
+#   - velocity_stasis_offset_10 : relaxed stasis offset events (0.10 m/s, 21 events)
+#   - left_hand_stop_onset   : left hand stops (CSV markers, ~83 events)
+#   - right_hand_stop_onset  : right hand stops (CSV markers, ~33 events)
+#   - global_motion_peak     : motion acceleration peaks (~101 events)
+#
+# Key finding: strict stasis (0.05 m/s bilateral) predicts EEG better
+# than relaxed threshold (0.10 m/s) — hard bilateral holds drive the
+# strongest neural response.
+
+name: motion_state_v3
+
+regressors:
+  - motion_energy
+  - velocity_stasis
+  - velocity_stasis_onset_10
+  - velocity_stasis_offset_10
+  - left_hand_stop_onset
+  - right_hand_stop_onset
+  - global_motion_peak
+
+trf:
+  tmin: 0.0
+  tmax: 0.5
+  backend: ridge
+  alpha: 10000000.0   # optimized via alpha sweep (100 → 1e8); F7 plateaus at 1e7–1e8
+
+evaluation:
+  scheme: blocked
+  folds: leave_one_presentation_out

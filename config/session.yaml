@@ -1,0 +1,46 @@
+# Session / recording config — hardware + acquisition facts for this dataset.
+# One file per recording setup (participant × equipment).
+# This file is for participant MC, BioSemi 512 Hz, 5× ASL Story.
+#
+# NOTE: codes 59 and 62 appear 6–7 times each at irregular intervals.
+# Their meaning is unconfirmed — possible experimenter keypresses or break markers.
+# pulse_code: 50 fires ~846× at median 1000ms gap. Awaiting professor confirmation
+# that this is the Rokoko→BioSemi sync clock (treat as confirmed for now).
+# If the code turns out to be different, change only this file.
+
+participant: MC
+srate: 512           # EEG acquisition rate in Hz
+common_rate: 64      # shared analysis rate (8× decimation from 512; ~1.09× upsampling from 58.82 Hz motion)
+
+# Video presentation markers
+onset_code: 255      # video onset  (fires 5×)
+end_code: 254        # video end    (fires 5×); each [255…254] bracket = one presentation
+n_presentations: 5
+presentation_duration_s: 172.87  # measured from first real data bracket
+
+# Sync pulse
+pulse_code: 50            # PENDING professor confirmation — fires ~846×
+pulse_interval_ms: 1000   # intended interval; median observed = 1000.0 ms exactly
+
+# Channel handling
+# 35 total channels; 3 non-scalp channels are dropped before analysis.
+drop_channels: [LMastoid, RMastoid, Eye, Oz, FC5, O2]
+# Oz (499 µV std), FC5 (145 µV), O2 (142 µV) confirmed bad across all 5 presentations.
+# All other 29 scalp channels are clean (9-20 µV std).
+# Remaining 32 scalp channels (auto-selected after dropping):
+# Fp1 AF3 F7 F3 FC1 FC5 T7 C3 CP1 CP5 P7 P3 Pz PO3 O1 Oz O2 PO4
+# P4 P8 CP6 CP2 C4 T8 FC6 FC2 F4 F8 AF4 Fp2 Fz Cz
+
+# EEG format
+eeg_format: eeglab   # .set + .fdt pair, read with mne.io.read_raw_eeglab
+
+# Data file paths (relative to project root)
+eeg_path: sign_language_trf/data/eeg/MC.ICA.reject.set
+motion_path: sign_language_trf/data/rokoko/Tristan_Story_1_hands_only.csv
+markers_path: sign_language_trf/data/markers/Tristan_Story_1_processed_biosemi_markers.csv
+
+# Sync offset (estimated from shared motion events; see synchronization.py)
+# First EEG motion event after onset_255 is at +2.42s; first motion-file event is 2.433s.
+# Offset ≈ 13ms ≈ 1 sample at 64 Hz — well within one sample.
+# Motion file time 0 ≈ video onset (code 255). Applied as a config value, not hardcoded.
+motion_onset_offset_ms: 0.0   # refine after sync module validates against all 5 brackets

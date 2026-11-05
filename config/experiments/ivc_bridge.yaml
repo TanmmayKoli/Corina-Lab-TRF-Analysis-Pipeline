@@ -1,0 +1,27 @@
+# Experiment: IVC bridge model
+# IVC + Rokoko kinematics combined.
+# Tests whether video-derived visual motion explains unique variance
+# beyond 3D joint kinematics, and vice versa.
+# Key scientific question: double dissociation between occipital (IVC)
+# and frontal-temporal (kinematics) channels.
+
+name: ivc_bridge
+description: >
+  Combined model: IVC (video pixel motion) + best Rokoko model
+  (motion_energy + velocity_stasis). Tests for double dissociation:
+  IVC drives occipital cortex, kinematics drive frontal-temporal.
+
+regressors:
+  - ivc
+  - motion_energy
+  - velocity_stasis
+
+trf:
+  tmin: 0.0
+  tmax: 0.5
+  backend: ridge
+  alpha: 10000000.0
+
+evaluation:
+  scheme: blocked
+  folds: leave_one_presentation_out

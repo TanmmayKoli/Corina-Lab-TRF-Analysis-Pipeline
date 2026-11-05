@@ -1,0 +1,38 @@
+# Experiment: sign_phonology
+# --------------------------
+# Tests whether phonologically-grounded kinematic events predict EEG
+# better than raw motion features.
+#
+# Scientific question:
+#   Does parsing sign language structure (stroke peaks within signs,
+#   transition minima between signs, signing rate) explain neural
+#   activity in a viewer's EEG beyond what raw motion energy captures?
+#
+# Regressors:
+#   motion_energy      - continuous overall movement (baseline control)
+#   sign_stroke_peak   - event at velocity peak within each ELAN sign (stroke phase)
+#   sign_transition_min- event at velocity minimum in each inter-sign gap (transition/hold)
+#   sign_rate          - continuous signing rhythm (signs/second)
+#
+# Requires: register_elan_regressors(elan) called before running.
+
+name: sign_phonology
+description: >
+  ELAN + Rokoko combined model. Tests phonological parsing of sign structure:
+  stroke peaks, transition minima, and signing rate alongside motion energy.
+
+regressors:
+  - motion_energy
+  - sign_stroke_peak
+  - sign_transition_min
+  - sign_rate
+
+trf:
+  tmin: 0.0
+  tmax:  0.6
+  backend: ridge
+  alpha: 10000000.0
+
+evaluation:
+  scheme: blocked
+  folds: leave_one_presentation_out

@@ -1,0 +1,23 @@
+# Experiment: IVC baseline
+# Single regressor — global visual change from the video.
+# Visual analog of the speech envelope.
+# Expected to drive occipital channels (O1, PO3, PO4).
+
+name: ivc_base
+description: >
+  Instantaneous Visual Change (Brookshire et al. 2017) as sole regressor.
+  Tests whether low-level retinal motion energy (pixel differences) predicts
+  EEG independently of Rokoko kinematics.
+
+regressors:
+  - ivc
+
+trf:
+  tmin: 0.0
+  tmax: 0.5
+  backend: ridge
+  alpha: 10000000.0
+
+evaluation:
+  scheme: blocked
+  folds: leave_one_presentation_out
