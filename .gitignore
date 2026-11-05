@@ -1,6 +1,3 @@
-# ── EEG data (participant data — never commit) ────────────────────────────
-sign_language_trf/data/eeg/
-
 # ── Large stimulus / motion files ────────────────────────────────────────
 sign_language_trf/data/video/
 sign_language_trf/data/rokoko/Tristan_Story_1_raw.csv
