@@ -9,3 +9,6 @@ mne>=1.5
 
 # Config
 pyyaml>=6.0
+
+# Video processing (required for IVC regressor)
+opencv-python>=4.8
